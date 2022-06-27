@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rest-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /?(.*)
+          backend:
+            serviceName: rest-app-client-service
+            servicePort: 80
+        - path: /api/?(.*)
+          backend:
+            serviceName: rest-app-api
+            servicePort: 8080
